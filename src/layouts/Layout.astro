@@ -1,5 +1,5 @@
 ---
-import "../styles/reset.css";
+// import "../styles/reset.css";
 import "../styles/global.css";
 
 const { title, description, bodyClass } = Astro.props;
@@ -41,5 +41,23 @@ const pageTitle = title ? `${title} | MIO LOG GAMES` : "MIO LOG GAMES";
 .page-index {
   display: grid;
   grid-template-rows: 1fr auto auto;
+}
+
+.page-tiles {
+  background: linear-gradient(180deg, var(--bgLight) 0%, var(--bg) 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top, 20px) 16px env(safe-area-inset-bottom, 32px);
+  overflow: hidden;
+  position: fixed;
+  font-family: 'Bodoni Moda', serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: 'wdth' 100;
 }
 </style>

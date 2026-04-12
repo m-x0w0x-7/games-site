@@ -6,7 +6,7 @@ module.exports = {
     require('postcss-custom-media'),
     require('postcss-preset-env')({
       features: {
-        'math-functions': false,
+        'cascade-layers': false,
       },
     }),
     require('autoprefixer'),

@@ -6,6 +6,16 @@
   --deepBlue: #0b132b;
   --moonWhite: #e6f7fc;
   --moonYellow: #cdc09c;
+  --bg: #0f0f14;
+  --bgLight: #243549;
+  --surface: #1c1c28;
+  --grid: #252535;
+  --empty: #1e1e2c;
+  --text: #e6f7fc;
+  --muted: #4b89a3;
+  --gold: #e8a820;
+  /* --moon: #ebe1c5; */
+  --moon: #cdc09c;
 }
 
 html {
@@ -16,6 +26,7 @@ body {
   min-height: 100vh;
   background: var(--black);
   overflow-x: hidden;
+  color: #FFF;
   font-family: 'Roboto', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
