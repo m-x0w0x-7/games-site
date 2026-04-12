@@ -12,8 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.5",
-    "astro-relative-links": "^0.4.2"
+    "astro-relative-links": "^0.4.2",
+    "autoprefixer": "^10.4.27",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^4.0.0",

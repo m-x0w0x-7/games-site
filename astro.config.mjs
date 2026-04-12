@@ -1,11 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import relativeLinks from 'astro-relative-links';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   build: {
-    format: 'preserve',
+    format: 'file',
   },
   server: {
     host: true,
@@ -27,6 +28,8 @@ export default defineConfig({
         '@Images': '/src/images',
       },
     },
+    plugins: [tailwindcss()],
   },
+  site: "https://miolog-games.online",
   base: '/',
 });

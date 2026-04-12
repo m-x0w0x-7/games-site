@@ -1,0 +1,45 @@
+---
+import "../styles/reset.css";
+import "../styles/global.css";
+
+const { title, description, bodyClass } = Astro.props;
+const pageTitle = title ? `${title} | MIO LOG GAMES` : "MIO LOG GAMES";
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="google-adsense-account" content="ca-pub-1271614412432891">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description}>
+    <meta property="og:url" content="https://miolog-games.online/">
+    <meta property="og:title" content={title}>
+    <meta property="og:type" content="website">
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content="">
+    <meta property="og:site_name" content="MIO LOG GAMES">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:site" content="@mio_lunamare">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="app-touch-icon-precomposed" href="">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <slot></slot>
+  </body>
+</html>
+
+<style>
+.page-index {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+}
+</style>

@@ -1,0 +1,137 @@
+---
+import Layout from "../../layouts/Layout.astro"
+---
+
+<Layout
+  title="プライバシーポリシー"
+  description="MIO LOG GAMES のプライバシーポリシーです。"
+  bodyClass="page-policy"
+>
+  <link slot="head"
+        href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Roboto:ital@0;1&display=swap"
+        rel="stylesheet"
+  />
+
+  <div class="page-contents">
+    <h1 class="policy_title">プライバシーポリシー</h1>
+    <dl class="policy_list">
+      <div class="policy_detail">
+        <dt class="policy_listTitle">1. 広告の配信について</dt>
+        <dd class="policy_listDetail">
+          <p class="policy_listDetail_text">当サイトでは、第三者配信の広告サービス「Google アドセンス」を利用しています。</p>
+          <p class="policy_listDetail_text">広告配信事業者は、ユーザーの興味に応じた商品やサービスの広告を表示するため、クッキー（Cookie）を使用することがあります。これによって当サイトはお客様のコンピュータを識別できるようになりますが、お客様個人を特定できるものではありません。</p>
+          <p class="policy_listDetail_text">Cookieを無効にする方法やGoogleアドセンスに関する詳細は「<a href="https://policies.google.com/technologies/ads?hl=ja" target="_blank" rel="noopener noreferrer">広告 – ポリシーと規約 – Google</a>」をご確認ください。</p>
+        </dd>
+      </div>
+      <div class="policy_detail">
+        <dt class="policy_listTitle">2. アクセス解析ツールについて</dt>
+        <dt class="policy_listDetail">
+          <p class="dt policy_listDetail_text">す。これはブラウザを閉じると消去される一時的なデータ保持の仕組みであり、主に「ゲームの最高得点の記録」などの利便性向上のために利用しています。</p>
+          <p class="dt policy_listDetail_text">これらのデータには氏名、住所、メールアドレス、電話番号などの個人情報は一切含まれません。</p>
+        </dt>
+      </div>
+      <div class="policy_detail">
+        <dt class="policy_listTitle">3. 個人情報の収集と利用目的</dt>
+        <dt class="policy_listDetail">
+          <p class="dt policy_listDetail_text">当サイトでは、会員登録やログイン機能、メールマガジン等の個人情報を直接取得する機能は備えておりません。/p>
+          <p class="dt policy_listDetail_text">ただし、利用者からのお問い合わせを「X（旧Twitter）」のダイレクトメッセージ（DM）にて受け付ける際、アカウント名やメッセージ内容を確認することがあります。これらの情報は、お問い合わせへの回答や必要な情報を連絡する場合にのみ利用し、それ以外の目的で利用することはありません。</p>
+        </dt>
+      </div>
+      <div class="policy_detail">
+        <dt class="policy_listTitle">4. 免責事項</dt>
+        <dt class="policy_listDetail">
+          <p class="dt policy_listDetail_text">当サイトのコンテンツ・情報について、できる限り正確な情報を提供するよう努めておりますが、正確性や安全性を保証するものではありません。当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。</p>
+          <p class="dt policy_listDetail_text">また、当サイトからリンクやバナーなどによって他のサイトに移動された場合、移動先サイトで提供される情報、サービス等について一切の責任を負いません。</p>
+        </dt>
+      </div>
+      <div class="policy_detail">
+        <dt class="policy_listTitle">5. プライバシーポリシーの変更について</dt>
+        <dt class="policy_listDetail">
+          <p class="dt policy_listDetail_text">当サイトは、個人情報に関して適用される日本の法令を遵守するとともに、本ポリシーの内容を適宜見直しその改善に努めます。修正された最新のプライバシーポリシーは常に本ページにて開示されます。</p>
+        </dt>
+      </div>
+    </dl>
+    <div class="contact">
+      <dl class="contact_list">
+        <dt class="contact_title">運営者情報</dt>
+        <dd class="contact_detail">
+          お問い合わせ：<span class="contact_account"></span>（DMにて承ります）
+        </dd>
+      </dl>
+    </div>
+    <div class="return_top">
+      <a href="/">TOPに戻る</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+.page-contents {
+  width: min(100%, 600px);
+  margin: 0 auto;
+  padding: min(calc(80vw / 3.9), 80px) min(calc(20vw / 3.9), 20px);
+  text-align: left;
+}
+.policy_title {
+  margin-bottom: 32px;
+  font-size: 24px;
+  text-align: center;
+}
+.policy_detail {
+  margin-bottom: 32px;
+}
+.policy_listTitle {
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+.policy_listDetail_text {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.contact {
+  margin-top: 24px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-top: 1px solid var(--moonWhite);
+  border-bottom: 1px solid var(--moonWhite);
+}
+.contact_title {
+  margin-bottom: 10px;
+}
+.return_top {
+  width: fit-content;
+  margin: 32px auto 0;
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    transition: opacity 0.3s ease-in-out;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // contact account
+  function account() {
+    const u = 'mio';
+    const d = 'lunamare';
+
+    const target = document.querySelector('.contact_account');
+    const link = 'https://x.com/' + u + '_' + d;
+    const text = '@' + u + '_' + d;
+
+    const a = document.createElement('a');
+    a.setAttribute('href', link);
+    a.setAttribute('target', '_blank');
+    a.setAttribute('rel', 'noopener noreferrer');
+    a.textContent = text;
+    target?.append(a);
+  }
+  account();
+});
+</script>

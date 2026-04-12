@@ -1,17 +1,99 @@
 ---
-
+import Layout from "../layouts/Layout.astro"
 ---
 
-<html lang="ja">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  description="短時間でさくっと遊べるゲーム集。暇つぶしにどうぞ。"
+  bodyClass="page-index"
+>
+  <link slot="head"
+        href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&family=Roboto:ital@0;1&display=swap"
+        rel="stylesheet"
+  />
+  <!-- <script slot="head" src="/assets/scripts/tiles.js"></script> -->
+
+  <div class="page-contents">
+    <h1 class="title">MIO LOG GAMES</h1>
+    <p class="lead">短時間でさくっと遊べるゲーム集</p>
+    <ul class="list">
+      <li class="list_item">
+        <a href="./tiles/" class="link">
+          <span class="font-roboto link_head">Tiles</span>
+          <span class="note">いわゆる2048<br>同じ数字のタイルを組み合わせよう</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <a href="/policy.html" class="policy_link">プライバシーポリシー</a>
+  <p class="copyright">@LUNA MARE</p>
+</Layout>
+
+<style>
+.page-contents {
+  width: min(100%, 600px);
+  margin: 0 auto;
+  padding: min(calc(80vw / 3.9), 80px) min(calc(20vw / 3.9), 20px);
+  text-align: center;
+}
+
+.title {
+  margin-bottom: min(calc(24vw / 3.9), 24px);
+  font-size: min(calc(36vw / 3.9), 36px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lead {
+  margin-bottom: min(calc(32vw / 3.9), 32px);
+  font-size: min(calc(16vw / 3.9), 16px);
+  line-height: 1.7;
+}
+
+.list {
+  width: min(100%, 400px);
+  margin: 0 auto;
+}
+
+.list_item {
+  & + & {
+    margin-top: min(calc(16vw / 3.9), 16px);
+  }
+}
+
+.link {
+  display: block;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.2);
+  /* filter: drop-shadow(0 0 8px rgb(230 247 252 / 0.4)); */
+  box-shadow: 0 0 8px rgb(230 247 252 / 0.4);
+}
+
+.link_head {
+  display: block;
+  margin-bottom: min(calc(8vw / 3.9), 8px);
+  font-size: min(calc(24vw / 3.9), 24px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.note {
+  display: block;
+  font-size: min(calc(12vw / 3.9), 12px);
+  line-height: 1.4;
+}
+
+.policy_link {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  font-size: 10px;
+}
+
+.copyright {
+  margin-top: 10px;
+  padding-bottom: 20px;
+  font-size: 10px;
+  text-align: center;
+}
+</style>
