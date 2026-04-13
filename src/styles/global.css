@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./media.css";
 
 :root {
   --black: #000;
