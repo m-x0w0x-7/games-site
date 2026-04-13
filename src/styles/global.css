@@ -48,3 +48,14 @@ a {
 .font-roboto {
   font-family: 'Roboto', sans-serif;
 }
+
+.u-pc {
+  @media (--sp) {
+    display: none !important;
+  }
+}
+.u-sp {
+  @media (--pc) {
+    display: none !important;
+  }
+}
