@@ -1,8 +1,8 @@
 ---
-import Layout from "../../layouts/Layout.astro"
+import GameLayout from "../../layouts/GameLayout.astro"
 ---
 
-<Layout
+<GameLayout
   title="Tiles"
   description="いわゆる2048。同じ数字のタイルを組み合わせて2048を目指そう！"
   bodyClass="page-tiles"
@@ -11,7 +11,6 @@ import Layout from "../../layouts/Layout.astro"
         href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;1,6..96,500&display=swap"
         rel="stylesheet"
   />
-  <script slot="head" src="/assets/scripts/tiles.js"></script>
 
   <div class="inner">
     <div class="top">
@@ -28,8 +27,8 @@ import Layout from "../../layouts/Layout.astro"
       </div>
     </div>
     <div class="btns">
-      <button onclick="newGame()">New Game</button>
-      <button onclick="undo()">Undo</button>
+      <button id="btn-new-game">New Game</button>
+      <button id="btn-undo">Undo</button>
     </div>
     <div class="game">
       <div class="grid" id="grid"></div>
@@ -37,15 +36,36 @@ import Layout from "../../layouts/Layout.astro"
       <div class="overlay" id="overlay">
         <h2 id="ov-title">Game Over</h2>
         <p id="ov-sub">Score: 0</p>
-        <button id="ov-btn" onclick="newGame()">Try Again</button>
+        <button id="ov-btn">Try Again</button>
       </div>
     </div>
     <p class="hint">Swipe to move · Tap Undo to go back one step</p>
   </div>
   <canvas id="bg"></canvas>
-</Layout>
+</GameLayout>
+
+<script>
+import '../../scripts/tiles.js';
+</script>
 
 <style is:global>
+.page-tiles {
+  background: linear-gradient(180deg, var(--bgLight) 0%, var(--bg) 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top, 20px) 16px env(safe-area-inset-bottom, 32px);
+  overflow: hidden;
+  position: fixed;
+  font-family: 'Bodoni Moda', serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: 'wdth' 100;
+}
 .inner {
   display: flex;
   flex-direction: column;
