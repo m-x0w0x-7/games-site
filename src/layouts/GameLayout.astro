@@ -1,0 +1,31 @@
+---
+import Layout from './Layout.astro';
+
+const { title, description, bodyClass } = Astro.props;
+---
+
+<Layout title={title} description={description} bodyClass={bodyClass}>
+  <slot name="head" slot="head" />
+  <a href="/" class="back-btn">← Games</a>
+  <slot />
+</Layout>
+
+<style is:global>
+.back-btn {
+  position: fixed;
+  top: max(env(safe-area-inset-top, 12px), 12px);
+  left: max(env(safe-area-inset-left, 16px), 16px);
+  z-index: 100;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--surface);
+  transition: color 0.15s, background 0.15s;
+}
+.back-btn:hover {
+  color: var(--text);
+  background: #26263a;
+}
+</style>
