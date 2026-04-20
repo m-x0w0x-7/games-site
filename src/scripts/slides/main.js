@@ -200,7 +200,7 @@ function getFlickTargetIndex(dir) {
 function setupEventListeners() {
   startBtnEl.addEventListener('click', handleStartClick);
 
-  // タップ操作
+  // マウスクリック（デスクトップ用）
   boardEl.addEventListener('click', (e) => {
     const tileEl = e.target.closest('.slide-tile');
     if (!tileEl || tileEl.classList.contains('slide-tile--last')) return;
@@ -208,7 +208,7 @@ function setupEventListeners() {
     if (!Number.isNaN(index)) handleTileClick(index);
   });
 
-  // フリック操作
+  // タッチ操作（タップ・フリック共用）
   let touchStartX = 0;
   let touchStartY = 0;
 
@@ -216,23 +216,34 @@ function setupEventListeners() {
     if (state.phase !== Phase.PLAYING) return;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
-    e.preventDefault();
-  }, { passive: false });
+    // preventDefault するとクリックイベントが発火しなくなるため、ここでは呼ばない
+  }, { passive: true });
 
   boardEl.addEventListener('touchend', (e) => {
     if (state.phase !== Phase.PLAYING) return;
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    const dist = Math.max(Math.abs(dx), Math.abs(dy));
 
     const MIN_SWIPE = 20;
-    if (Math.max(Math.abs(dx), Math.abs(dy)) < MIN_SWIPE) return;
 
-    const dir = Math.abs(dx) > Math.abs(dy)
-      ? (dx > 0 ? 'right' : 'left')
-      : (dy > 0 ? 'down' : 'up');
+    if (dist < MIN_SWIPE) {
+      // タップ：タッチした座標の要素を取得して移動
+      const tileEl = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.slide-tile');
+      if (!tileEl || tileEl.classList.contains('slide-tile--last')) return;
+      const index = parseInt(tileEl.dataset.index ?? '', 10);
+      if (!Number.isNaN(index)) handleMove(index);
+    } else {
+      // フリック：スワイプ方向から移動対象タイルを決定
+      const dir = Math.abs(dx) > Math.abs(dy)
+        ? (dx > 0 ? 'right' : 'left')
+        : (dy > 0 ? 'down' : 'up');
+      const targetIndex = getFlickTargetIndex(dir);
+      if (targetIndex >= 0) handleMove(targetIndex);
+    }
 
-    const targetIndex = getFlickTargetIndex(dir);
-    if (targetIndex >= 0) handleMove(targetIndex);
+    // フリック後にclickイベントが二重発火するのを防ぐ
     e.preventDefault();
   }, { passive: false });
 }
