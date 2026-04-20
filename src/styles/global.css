@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./media.css";
 
 :root {
   --black: #000;
@@ -47,4 +48,15 @@ a {
 
 .font-roboto {
   font-family: 'Roboto', sans-serif;
+}
+
+.u-pc {
+  @media (--sp) {
+    display: none !important;
+  }
+}
+.u-sp {
+  @media (--pc) {
+    display: none !important;
+  }
 }

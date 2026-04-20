@@ -1,3 +1,6 @@
 @custom-media --sm (640px <= width);
 @custom-media --md (768px <= width);
 @custom-media --lg (1024px <= width);
+
+@custom-media --sp (width <= 768px);
+@custom-media --pc (width > 768px);

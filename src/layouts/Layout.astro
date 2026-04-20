@@ -4,30 +4,40 @@ import "../styles/global.css";
 
 const { title, description, bodyClass } = Astro.props;
 const pageTitle = title ? `${title} | MIO LOG GAMES` : "MIO LOG GAMES";
+
+const url = 'https://miolog-games.online/';
+const ogImage = '';
+const themeColor = '#FFF';
+const favicon = '/favicon.ico';
+const appleIcon = '';
+const canonical = 'https://miolog-games.online/';
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="google-adsense-account" content="ca-pub-1271614412432891">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="index,follow" />
     <title>{pageTitle}</title>
-    <meta name="description" content={description}>
-    <meta property="og:url" content="https://miolog-games.online/">
+    <meta name="description" content={description} />
+    <meta property="og:url" content={url}>
     <meta property="og:title" content={title}>
     <meta property="og:type" content="website">
     <meta property="og:description" content={description}>
-    <meta property="og:image" content="">
-    <meta property="og:site_name" content="MIO LOG GAMES">
+    <meta property="og:image" content={ogImage}>
+    <meta property="og:site_name" content={title}>
     <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content={title}>
     <meta name="twitter:description" content={description}>
-    <meta name="twitter:site" content="@mio_lunamare">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:image" content="">
-    <link rel="icon" href="/favicon.ico">
-    <link rel="app-touch-icon-precomposed" href="">
+    <meta name="twitter:image" content={ogImage}>
+    <meta name="theme-color" content={themeColor}>
+    <link rel="icon" href={favicon}>
+    <!-- <link rel="app-touch-icon-precomposed" href={appleIcon}> -->
+    <link rel="canonical" href={canonical}>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <slot name="head" />
@@ -41,23 +51,5 @@ const pageTitle = title ? `${title} | MIO LOG GAMES` : "MIO LOG GAMES";
 .page-index {
   display: grid;
   grid-template-rows: 1fr auto auto;
-}
-
-.page-tiles {
-  background: linear-gradient(180deg, var(--bgLight) 0%, var(--bg) 100%);
-  background-attachment: fixed;
-  color: var(--text);
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: env(safe-area-inset-top, 20px) 16px env(safe-area-inset-bottom, 32px);
-  overflow: hidden;
-  position: fixed;
-  font-family: 'Bodoni Moda', serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-  font-variation-settings: 'wdth' 100;
 }
 </style>
