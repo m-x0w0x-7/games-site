@@ -1,4 +1,5 @@
 export const Phase = {
+  SELECTING: 'selecting',
   READY: 'ready',
   PLAYING: 'playing',
   CLEAR: 'clear',
@@ -8,7 +9,7 @@ export function createInitialState() {
   const gridSize = 3;
   const total = gridSize * gridSize;
   return {
-    phase: Phase.READY,
+    phase: Phase.SELECTING,
     gridSize,
     tiles: [],
     emptyIndex: total - 1,

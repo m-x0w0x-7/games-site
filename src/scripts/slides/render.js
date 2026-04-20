@@ -122,7 +122,8 @@ export function renderClear(state) {
 
 export function renderMessage(phase, msgEl) {
   const messages = {
-    ready: 'スタートを押してください',
+    selecting: '',
+    ready: '',
     playing: '',
     clear: 'クリア！',
   };

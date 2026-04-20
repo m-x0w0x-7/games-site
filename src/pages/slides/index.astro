@@ -12,7 +12,25 @@ import GameLayout from "../../layouts/GameLayout.astro"
         rel="stylesheet"
   />
 
-  <div class="slides-app">
+  <div class="slides-app" id="slides-app" data-phase="selecting">
+
+    <!-- 画像ピッカー（selectingフェーズ） -->
+    <section class="picker-section">
+      <p class="picker-title">画像を選んでください</p>
+      <div class="picker-list">
+        <button class="picker-btn" data-index="0" aria-pressed="false">
+          <img src="/assets/images/slides/img_01.jpg" alt="画像1" />
+        </button>
+        <button class="picker-btn" data-index="1" aria-pressed="false">
+          <img src="/assets/images/slides/img_02.jpg" alt="画像2" />
+        </button>
+        <button class="picker-btn" data-index="2" aria-pressed="false">
+          <img src="/assets/images/slides/img_03.jpg" alt="画像3" />
+        </button>
+      </div>
+    </section>
+
+    <!-- ゲーム本体（ready / playing / clearフェーズ） -->
     <div class="puzzle-container">
       <div class="puzzle-board" id="puzzle-board"></div>
     </div>
@@ -23,9 +41,14 @@ import GameLayout from "../../layouts/GameLayout.astro"
           <span class="info-value" id="move-count">0</span>
         </div>
       </div>
-      <p class="message" id="message">スタートを押してください</p>
-      <button class="start-btn" id="start-btn">Start</button>
+      <p class="message" id="message"></p>
+      <div class="button-group">
+        <button class="action-btn" id="start-btn">Start</button>
+        <button class="action-btn" id="retry-btn">同じ画像でもう一度</button>
+        <button class="action-btn action-btn--secondary" id="reselect-btn">画像を選び直す</button>
+      </div>
     </div>
+
   </div>
 </GameLayout>
 
@@ -55,11 +78,107 @@ init();
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 16px 40px;
+  padding: 0 16px 60px;
   gap: 20px;
 }
 
-/* 盤面 */
+/* ===== フェーズ制御 ===== */
+
+/* ピッカーはデフォルト非表示 */
+.picker-section {
+  display: none;
+}
+
+/* selectingフェーズ: ピッカー表示、ゲームUI非表示 */
+.slides-app[data-phase="selecting"] .picker-section {
+  display: flex;
+}
+.slides-app[data-phase="selecting"] .puzzle-container {
+  display: none;
+}
+.slides-app[data-phase="selecting"] .controls {
+  display: none;
+}
+
+/* ボタン: デフォルト非表示 */
+#start-btn,
+#retry-btn,
+#reselect-btn {
+  display: none;
+}
+
+/* readyフェーズ: スタートボタンのみ表示 */
+.slides-app[data-phase="ready"] #start-btn {
+  display: block;
+}
+
+/* clearフェーズ: 2ボタン表示 */
+.slides-app[data-phase="clear"] #retry-btn {
+  display: block;
+}
+.slides-app[data-phase="clear"] #reselect-btn {
+  display: block;
+}
+
+/* ===== ピッカー ===== */
+
+.picker-section {
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.picker-title {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.picker-list {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  justify-content: center;
+}
+
+.picker-btn {
+  width: 100px;
+  height: 100px;
+  padding: 0;
+  border: 2.5px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--surface);
+  transition:
+    border-color 0.15s,
+    transform 0.1s,
+    box-shadow 0.15s;
+  flex-shrink: 0;
+}
+
+.picker-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.picker-btn:active {
+  transform: scale(0.96);
+}
+
+.picker-btn--selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+/* ===== 盤面 ===== */
+
 .puzzle-container {
   width: 100%;
   max-width: 400px;
@@ -94,7 +213,8 @@ init();
   filter: brightness(1.1);
 }
 
-/* コントロール */
+/* ===== コントロール ===== */
+
 .controls {
   width: 100%;
   max-width: 400px;
@@ -146,14 +266,24 @@ init();
   font-size: 18px;
 }
 
-.start-btn {
+/* ===== ボタン ===== */
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.action-btn {
   background: var(--surface);
   color: var(--text);
   border: none;
   border-radius: 12px;
   padding: 13px 0;
   width: 100%;
-  max-width: 200px;
   font-family: 'Bodoni Moda', serif;
   font-size: 14px;
   font-weight: 500;
@@ -163,8 +293,19 @@ init();
     transform 0.1s;
 }
 
-.start-btn:active {
+.action-btn:active {
   transform: scale(0.97);
   background: #26263a;
+}
+
+.action-btn--secondary {
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.action-btn--secondary:active {
+  background: var(--surface);
+  color: var(--text);
 }
 </style>
