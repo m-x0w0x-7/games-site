@@ -15,6 +15,7 @@ import {
   renderMessage,
   renderMoveCount,
 } from './render.js';
+import { openCropper } from './cropper.js';
 
 const state = createInitialState();
 
@@ -25,7 +26,7 @@ const IMAGE_LIST = [
   '/assets/images/slides/img_03.jpg',
 ];
 
-let appEl, boardEl, msgEl, moveEl, startBtnEl, retryBtnEl, reselectBtnEl;
+let appEl, boardEl, msgEl, moveEl, startBtnEl, retryBtnEl, reselectBtnEl, customImageBtnEl, imageFileInputEl;
 
 // --- フェーズ管理 ---
 
@@ -136,12 +137,46 @@ function getFlickTargetIndex(dir) {
 // --- イベント ---
 
 function setupEventListeners() {
-  // 画像ピッカー
+  // プリセット画像ピッカー
   document.querySelectorAll('.picker-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const index = parseInt(btn.dataset.index ?? '', 10);
       if (!Number.isNaN(index)) handleImageSelect(index);
     });
+  });
+
+  // カスタム画像ボタン → ファイル選択を起動
+  customImageBtnEl.addEventListener('click', () => {
+    imageFileInputEl.click();
+  });
+
+  // ファイル選択後 → クロッパーを開く
+  imageFileInputEl.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    imageFileInputEl.value = ''; // 同じファイルを再選択できるようリセット
+    if (!file) return;
+
+    openCropper(
+      file,
+      (blobUrl) => {
+        // カスタム画像を使う場合はプリセットの選択を解除
+        document.querySelectorAll('.picker-btn').forEach((btn) => {
+          btn.classList.remove('picker-btn--selected');
+          btn.setAttribute('aria-pressed', 'false');
+        });
+
+        // 前のカスタム画像 URL を解放
+        if (state.imageSrc.startsWith('blob:')) {
+          URL.revokeObjectURL(state.imageSrc);
+        }
+
+        state.imageSrc = blobUrl;
+        setPhase(Phase.READY);
+        initializePuzzle(state);
+        createTileElements(state);
+        renderGameUI();
+      },
+    );
   });
 
   // スタートボタン
@@ -202,9 +237,11 @@ export function init() {
   boardEl = document.getElementById('puzzle-board');
   msgEl = document.getElementById('message');
   moveEl = document.getElementById('move-count');
-  startBtnEl = document.getElementById('start-btn');
-  retryBtnEl = document.getElementById('retry-btn');
-  reselectBtnEl = document.getElementById('reselect-btn');
+  startBtnEl       = document.getElementById('start-btn');
+  retryBtnEl       = document.getElementById('retry-btn');
+  reselectBtnEl    = document.getElementById('reselect-btn');
+  customImageBtnEl = document.getElementById('custom-image-btn');
+  imageFileInputEl = document.getElementById('image-file-input');
 
   initRenderer(boardEl);
   setupEventListeners();
