@@ -28,6 +28,8 @@ import GameLayout from "../../layouts/GameLayout.astro"
           <img src="/assets/images/slides/img_03.jpg" alt="画像3" />
         </button>
       </div>
+      <button class="custom-image-btn" id="custom-image-btn">自分の画像を使う</button>
+      <input type="file" accept="image/*" id="image-file-input" style="display:none" />
     </section>
 
     <!-- ゲーム本体（ready / playing / clearフェーズ） -->
@@ -307,5 +309,144 @@ init();
 .action-btn--secondary:active {
   background: var(--surface);
   color: var(--text);
+}
+
+/* ===== 自分の画像ボタン ===== */
+
+.custom-image-btn {
+  background: transparent;
+  color: var(--muted);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: 'Bodoni Moda', serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    transform 0.1s;
+  margin-top: 4px;
+}
+
+.custom-image-btn:active {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(0.97);
+}
+
+/* ===== クロッパーモーダル ===== */
+
+.cropper-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.cropper-modal {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cropper-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.cropper-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #0a0a0a;
+  overflow: hidden;
+  border-radius: 8px;
+  touch-action: none;
+}
+
+.cropper-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cropper-shade {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.58);
+  pointer-events: none;
+}
+
+.cropper-frame {
+  position: absolute;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  cursor: move;
+  touch-action: none;
+  box-sizing: border-box;
+}
+
+.cropper-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cropper-handle[data-corner="tl"] { top: 0;    left: 0;    cursor: nwse-resize; }
+.cropper-handle[data-corner="tr"] { top: 0;    left: 100%; cursor: nesw-resize; }
+.cropper-handle[data-corner="bl"] { top: 100%; left: 0;    cursor: nesw-resize; }
+.cropper-handle[data-corner="br"] { top: 100%; left: 100%; cursor: nwse-resize; }
+
+.cropper-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cropper-btn {
+  flex: 1;
+  padding: 13px 0;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Bodoni Moda', serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.cropper-btn:active {
+  transform: scale(0.97);
+}
+
+.cropper-btn--confirm {
+  background: var(--gold, #d4af37);
+  color: #000;
+}
+
+.cropper-btn--confirm:active {
+  background: #b8972f;
+}
+
+.cropper-btn--cancel {
+  background: var(--surface);
+  color: var(--muted);
 }
 </style>
