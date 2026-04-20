@@ -6,6 +6,7 @@ import {
   moveTile,
   isSolved,
 } from './puzzle.js';
+import { getRowFromIndex, getColFromIndex, getIndexFromRowCol } from './utils.js';
 import {
   initRenderer,
   createTileElements,
@@ -174,15 +175,77 @@ function handleStartClick() {
 
 // --- イベント ---
 
+function getFlickTargetIndex(dir) {
+  const { emptyIndex, gridSize } = state;
+  const emptyRow = getRowFromIndex(emptyIndex, gridSize);
+  const emptyCol = getColFromIndex(emptyIndex, gridSize);
+
+  // フリック方向にタイルが動く → 空きマスの逆側にあるタイルを移動
+  const offset = {
+    right: [0, -1],  // 右フリック → 空きの左のタイルが右へ
+    left:  [0,  1],  // 左フリック → 空きの右のタイルが左へ
+    down:  [-1, 0],  // 下フリック → 空きの上のタイルが下へ
+    up:    [1,  0],  // 上フリック → 空きの下のタイルが上へ
+  }[dir];
+
+  if (!offset) return -1;
+
+  const targetRow = emptyRow + offset[0];
+  const targetCol = emptyCol + offset[1];
+
+  if (targetRow < 0 || targetRow >= gridSize || targetCol < 0 || targetCol >= gridSize) return -1;
+  return getIndexFromRowCol(targetRow, targetCol, gridSize);
+}
+
 function setupEventListeners() {
   startBtnEl.addEventListener('click', handleStartClick);
 
+  // マウスクリック（デスクトップ用）
   boardEl.addEventListener('click', (e) => {
     const tileEl = e.target.closest('.slide-tile');
     if (!tileEl || tileEl.classList.contains('slide-tile--last')) return;
     const index = parseInt(tileEl.dataset.index ?? '', 10);
     if (!Number.isNaN(index)) handleTileClick(index);
   });
+
+  // タッチ操作（タップ・フリック共用）
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  boardEl.addEventListener('touchstart', (e) => {
+    if (state.phase !== Phase.PLAYING) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    // preventDefault するとクリックイベントが発火しなくなるため、ここでは呼ばない
+  }, { passive: true });
+
+  boardEl.addEventListener('touchend', (e) => {
+    if (state.phase !== Phase.PLAYING) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    const dist = Math.max(Math.abs(dx), Math.abs(dy));
+
+    const MIN_SWIPE = 20;
+
+    if (dist < MIN_SWIPE) {
+      // タップ：タッチした座標の要素を取得して移動
+      const tileEl = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.slide-tile');
+      if (!tileEl || tileEl.classList.contains('slide-tile--last')) return;
+      const index = parseInt(tileEl.dataset.index ?? '', 10);
+      if (!Number.isNaN(index)) handleMove(index);
+    } else {
+      // フリック：スワイプ方向から移動対象タイルを決定
+      const dir = Math.abs(dx) > Math.abs(dy)
+        ? (dx > 0 ? 'right' : 'left')
+        : (dy > 0 ? 'down' : 'up');
+      const targetIndex = getFlickTargetIndex(dir);
+      if (targetIndex >= 0) handleMove(targetIndex);
+    }
+
+    // フリック後にclickイベントが二重発火するのを防ぐ
+    e.preventDefault();
+  }, { passive: false });
 }
 
 // --- 初期化 ---
