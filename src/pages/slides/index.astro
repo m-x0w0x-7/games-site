@@ -1,0 +1,170 @@
+---
+import GameLayout from "../../layouts/GameLayout.astro"
+---
+
+<GameLayout
+  title="Slides"
+  description="絵あわせスライドパズル。バラバラになった絵を元通りに並べよう！"
+  bodyClass="page-slides"
+>
+  <link slot="head"
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;1,6..96,500&display=swap"
+        rel="stylesheet"
+  />
+
+  <div class="slides-app">
+    <div class="puzzle-container">
+      <div class="puzzle-board" id="puzzle-board"></div>
+    </div>
+    <div class="controls">
+      <div class="info">
+        <div class="info-item">
+          <span class="info-label">手数</span>
+          <span class="info-value" id="move-count">0</span>
+        </div>
+      </div>
+      <p class="message" id="message">スタートを押してください</p>
+      <button class="start-btn" id="start-btn">Start</button>
+    </div>
+  </div>
+</GameLayout>
+
+<script>
+import { init } from '../../scripts/slides/main.js';
+init();
+</script>
+
+<style is:global>
+.page-slides {
+  background: linear-gradient(180deg, var(--bgLight) 0%, var(--bg) 100%);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bodoni Moda', serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings: 'wdth' 100;
+}
+
+.slides-app {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 16px 40px;
+  gap: 20px;
+}
+
+/* 盤面 */
+.puzzle-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.puzzle-board {
+  width: 100%;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--grid);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* タイル */
+.slide-tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  cursor: pointer;
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.slide-tile:active {
+  filter: brightness(1.1);
+}
+
+/* コントロール */
+.controls {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.info {
+  display: flex;
+  gap: 12px;
+}
+
+.info-item {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 8px 24px;
+  text-align: center;
+  min-width: 100px;
+}
+
+.info-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.info-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.message {
+  font-size: 13px;
+  color: var(--muted);
+  min-height: 20px;
+  text-align: center;
+  transition: color 0.3s;
+}
+
+.message[data-phase="clear"] {
+  color: var(--gold);
+  font-size: 18px;
+}
+
+.start-btn {
+  background: var(--surface);
+  color: var(--text);
+  border: none;
+  border-radius: 12px;
+  padding: 13px 0;
+  width: 100%;
+  max-width: 200px;
+  font-family: 'Bodoni Moda', serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+
+.start-btn:active {
+  transform: scale(0.97);
+  background: #26263a;
+}
+</style>
