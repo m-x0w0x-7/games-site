@@ -11,8 +11,7 @@
       "@data/*": ["src/data/*"],
       "@lib/*": ["src/lib/*"],
       "@styles/*": ["src/styles/*"],
-      "@js/*": ["src/js/*"],
-      "/*": ["public/images/*"]
+      "@js/*": ["src/js/*"]
     },
     "jsx": "preserve"
   }
