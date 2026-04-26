@@ -30,6 +30,7 @@ import GameLayout from "../../layouts/GameLayout.astro"
       </div>
       <button class="custom-image-btn" id="custom-image-btn">自分の画像を使う</button>
       <input type="file" accept="image/*" id="image-file-input" style="display:none" />
+      <p class="picker-note">※ 画像は端末内で処理されるため<br>サーバーに送信されることはありません。</p>
     </section>
 
     <!-- ゲーム本体（ready / playing / clearフェーズ） -->
@@ -80,7 +81,7 @@ init();
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 16px 60px;
+  padding: 40px 16px;
   gap: 20px;
 }
 
@@ -179,6 +180,12 @@ init();
   box-shadow: 0 0 0 1px var(--gold);
 }
 
+.picker-note {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+}
+
 /* ===== 盤面 ===== */
 
 .puzzle-container {
@@ -223,7 +230,7 @@ init();
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .info {
