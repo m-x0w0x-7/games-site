@@ -30,7 +30,16 @@ import GameLayout from "../../layouts/GameLayout.astro"
       </div>
       <button class="custom-image-btn" id="custom-image-btn">自分の画像を使う</button>
       <input type="file" accept="image/*" id="image-file-input" style="display:none" />
-      <p class="picker-note">※ 画像は端末内で処理されるため<br>サーバーに送信されることはありません。</p>
+      <div class="picker-note">
+        <p class="picker-note__heading">【画像について】</p>
+        <p class="picker-note__text">
+          画像は端末内でのみ処理され、外部へ送信されることはありません。<br>
+          ※ 著作権・肖像権にご注意ください。SNS投稿等のトラブルについて当サイトは責任を負いかねます。
+        </p>
+        <p class="picker-note__link">
+          詳細は<a href="/policy">プライバシーポリシー</a>でご確認ください
+        </p>
+      </div>
     </section>
 
     <!-- ゲーム本体（ready / playing / clearフェーズ） -->
@@ -182,8 +191,34 @@ init();
 
 .picker-note {
   font-size: 11px;
-  color: var(--muted);
+  color: var(--deepBlue);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: rgb(var(--muted-rgb) / 0.7);
+}
+
+.picker-note__heading {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.picker-note__text {
+  line-height: 1.7;
+  text-align: left;
+}
+
+.picker-note__link a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: opacity 0.2s;
+}
+
+.picker-note__link a:hover {
+  opacity: 0.7;
 }
 
 /* ===== 盤面 ===== */

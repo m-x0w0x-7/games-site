@@ -17,6 +17,7 @@
   --gold: #e8a820;
   /* --moon: #ebe1c5; */
   --moon: #cdc09c;
+  --muted-rgb: 75 137 163;
 }
 
 html {
@@ -27,12 +28,12 @@ body {
   min-height: 100vh;
   background: var(--black);
   overflow-x: hidden;
-  color: #FFF;
-  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-variation-settings: 'wdth' 100;
+  font-variation-settings: "wdth" 100;
 }
 
 img {
@@ -47,7 +48,7 @@ a {
 }
 
 .font-roboto {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .u-pc {
