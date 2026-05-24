@@ -6,7 +6,7 @@ let nextTileId = 1;
 const tileElements = new Map(); // id → HTMLElement
 
 function $(id) {
-  return document.getElementById(id);
+  return document.querySelector('.js-' + id);
 }
 
 function buildGrid() {
@@ -256,7 +256,7 @@ const game = document.querySelector('.game');
 game.addEventListener(
   'touchstart',
   (e) => {
-    if (e.target.closest('#overlay')) return;
+    if (e.target.closest('.js-overlay')) return;
     tx = e.touches[0].clientX;
     ty = e.touches[0].clientY;
     e.preventDefault();
@@ -266,7 +266,7 @@ game.addEventListener(
 game.addEventListener(
   'touchend',
   (e) => {
-    if (e.target.closest('#overlay')) return;
+    if (e.target.closest('.js-overlay')) return;
     const dx = e.changedTouches[0].clientX - tx;
     const dy = e.changedTouches[0].clientY - ty;
     if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
@@ -294,7 +294,7 @@ newGame();
 window.addEventListener('resize', () => render());
 
 // background
-const canvas = document.getElementById('bg');
+const canvas = document.querySelector('.js-bg');
 const ctx = canvas.getContext('2d');
 
 let particles = [];

@@ -12,7 +12,7 @@ import GameLayout from "../../layouts/GameLayout.astro"
         rel="stylesheet"
   />
 
-  <div class="slides-app" id="slides-app" data-phase="selecting">
+  <div class="slides-app js-slides-app" data-phase="selecting">
 
     <!-- 画像ピッカー（selectingフェーズ） -->
     <section class="picker-section">
@@ -28,8 +28,8 @@ import GameLayout from "../../layouts/GameLayout.astro"
           <img src="/assets/images/slides/img_03.jpg" alt="画像3" />
         </button>
       </div>
-      <button class="custom-image-btn" id="custom-image-btn">自分の画像を使う</button>
-      <input type="file" accept="image/*" id="image-file-input" style="display:none" />
+      <button class="custom-image-btn js-custom-image-btn">自分の画像を使う</button>
+      <input type="file" accept="image/*" class="js-image-file-input" style="display:none" />
       <div class="picker-note">
         <p class="picker-note__heading">【画像について】</p>
         <p class="picker-note__text">
@@ -44,20 +44,20 @@ import GameLayout from "../../layouts/GameLayout.astro"
 
     <!-- ゲーム本体（ready / playing / clearフェーズ） -->
     <div class="puzzle-container">
-      <div class="puzzle-board" id="puzzle-board"></div>
+      <div class="puzzle-board js-puzzle-board"></div>
     </div>
     <div class="controls">
       <div class="info">
         <div class="info-item">
           <span class="info-label">手数</span>
-          <span class="info-value" id="move-count">0</span>
+          <span class="info-value js-move-count">0</span>
         </div>
       </div>
-      <p class="message" id="message"></p>
+      <p class="message js-message"></p>
       <div class="button-group">
-        <button class="action-btn" id="start-btn">Start</button>
-        <button class="action-btn" id="retry-btn">同じ画像でもう一度</button>
-        <button class="action-btn action-btn--secondary" id="reselect-btn">画像を選び直す</button>
+        <button class="action-btn js-start-btn">Start</button>
+        <button class="action-btn js-retry-btn">同じ画像でもう一度</button>
+        <button class="action-btn action-btn--secondary js-reselect-btn">画像を選び直す</button>
       </div>
     </div>
 
@@ -113,22 +113,22 @@ init();
 }
 
 /* ボタン: デフォルト非表示 */
-#start-btn,
-#retry-btn,
-#reselect-btn {
+.js-start-btn,
+.js-retry-btn,
+.js-reselect-btn {
   display: none;
 }
 
 /* readyフェーズ: スタートボタンのみ表示 */
-.slides-app[data-phase="ready"] #start-btn {
+.slides-app[data-phase="ready"] .js-start-btn {
   display: block;
 }
 
 /* clearフェーズ: 2ボタン表示 */
-.slides-app[data-phase="clear"] #retry-btn {
+.slides-app[data-phase="clear"] .js-retry-btn {
   display: block;
 }
-.slides-app[data-phase="clear"] #reselect-btn {
+.slides-app[data-phase="clear"] .js-reselect-btn {
   display: block;
 }
 
