@@ -28,6 +28,10 @@ const IMAGE_LIST = [
 
 let appEl, boardEl, msgEl, moveEl, startBtnEl, retryBtnEl, reselectBtnEl, customImageBtnEl, imageFileInputEl;
 
+function $(name) {
+  return document.querySelector('.js-' + name);
+}
+
 // --- フェーズ管理 ---
 
 function setPhase(phase) {
@@ -233,15 +237,15 @@ function setupEventListeners() {
 // --- 初期化 ---
 
 export function init() {
-  appEl = document.getElementById('slides-app');
-  boardEl = document.getElementById('puzzle-board');
-  msgEl = document.getElementById('message');
-  moveEl = document.getElementById('move-count');
-  startBtnEl       = document.getElementById('start-btn');
-  retryBtnEl       = document.getElementById('retry-btn');
-  reselectBtnEl    = document.getElementById('reselect-btn');
-  customImageBtnEl = document.getElementById('custom-image-btn');
-  imageFileInputEl = document.getElementById('image-file-input');
+  appEl = $('slides-app');
+  boardEl = $('puzzle-board');
+  msgEl = $('message');
+  moveEl = $('move-count');
+  startBtnEl = $('start-btn');
+  retryBtnEl = $('retry-btn');
+  reselectBtnEl = $('reselect-btn');
+  customImageBtnEl = $('custom-image-btn');
+  imageFileInputEl = $('image-file-input');
 
   initRenderer(boardEl);
   setupEventListeners();

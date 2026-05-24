@@ -18,30 +18,30 @@ import GameLayout from "../../layouts/GameLayout.astro"
       <div class="scores">
         <div class="score">
           <div class="score-label">Score</div>
-          <div class="score-val" id="score">0</div>
+          <div class="score-val js-score">0</div>
         </div>
         <div class="score">
           <div class="score-label">Best</div>
-          <div class="score-val" id="best">0</div>
+          <div class="score-val js-best">0</div>
         </div>
       </div>
     </div>
     <div class="btns">
-      <button id="btn-new-game">New Game</button>
-      <button id="btn-undo">Undo</button>
+      <button class="js-btn-new-game">New Game</button>
+      <button class="js-btn-undo">Undo</button>
     </div>
     <div class="game">
-      <div class="grid" id="grid"></div>
-      <div class="tiles" id="tiles"></div>
-      <div class="overlay" id="overlay">
-        <h2 id="ov-title">Game Over</h2>
-        <p id="ov-sub">Score: 0</p>
-        <button id="ov-btn">Try Again</button>
+      <div class="grid js-grid"></div>
+      <div class="tiles js-tiles"></div>
+      <div class="overlay js-overlay">
+        <h2 class="js-ov-title">Game Over</h2>
+        <p class="js-ov-sub">Score: 0</p>
+        <button class="js-ov-btn">Try Again</button>
       </div>
     </div>
     <p class="hint">Swipe to move · Tap Undo to go back one step</p>
   </div>
-  <canvas id="bg"></canvas>
+  <canvas class="js-bg"></canvas>
 </GameLayout>
 
 <script>

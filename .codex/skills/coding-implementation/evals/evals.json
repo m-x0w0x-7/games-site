@@ -1,0 +1,32 @@
+{
+  "skill_name": "coding-implementation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "tiles画面で右スワイプ時の移動ロジックに回帰バグがあるので、再現テストを先に追加してから修正して",
+      "expected_output": "Red-Green-Refactorで、まず失敗テストを追加し、最小修正でテストを通したうえで影響範囲を確認している",
+      "files": [
+        "src/scripts/tiles.js",
+        "src/pages/tiles/index.astro"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "slides画面でフェーズ遷移時の表示崩れを修正して。readyではStartのみ、clearではRetryとReselectのみ表示されること",
+      "expected_output": "仕様を満たすUI制御に修正され、動作確認またはテスト結果が報告される",
+      "files": [
+        "src/pages/slides/index.astro",
+        "src/scripts/slides/main.js"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "JSで参照するDOM要素を監査し、id依存があればjs-接頭辞class参照へ統一して",
+      "expected_output": "監査結果と修正内容が提示され、命名規約に準拠している",
+      "files": [
+        "src/pages",
+        "src/scripts"
+      ]
+    }
+  ]
+}
