@@ -11,8 +11,12 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "node --test",
-    "format": "npx @biomejs/biome format --write",
-    "lint": "npx @biomejs/biome lint --write"
+    "format": "biome format ./src",
+    "format:fix": "biome format --write ./src",
+    "lint": "biome lint ./src",
+    "lint:fix": "biome lint --write ./src",
+    "check": "biome check",
+    "check:fix": "biome check --write ./src"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
