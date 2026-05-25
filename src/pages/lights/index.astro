@@ -1,0 +1,169 @@
+---
+import GameLayout from '../../layouts/GameLayout.astro';
+---
+
+<GameLayout
+  title='Lights'
+  description='すべてのパネルを光らせよう'
+  bodyClass='page-lights'
+>
+  <div class='lights_app js-lights-app'>
+    <div class='lights_header'>
+      <h1 class='lights_title'>Lights</h1>
+      <div class='lights_moves-wrap'>
+        <span class='lights_moves-label'>Moves</span>
+        <span class='lights_moves js-lights-moves'>0</span>
+      </div>
+    </div>
+    <div class='lights_game'>
+      <div class='lights_board js-lights-board'></div>
+      <div class='lights_clear js-lights-clear'>
+        <p class='lights_clear-msg'>Clear!</p>
+      </div>
+    </div>
+    <div class='lights_footer'>
+      <button class='lights_reset-btn js-lights-reset'>Reset</button>
+    </div>
+  </div>
+</GameLayout>
+
+<script>
+import '../../scripts/lights.js';
+</script>
+
+<style is:global>
+.page-lights {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top, 20px) 16px env(safe-area-inset-bottom, 32px);
+}
+
+.lights_app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.lights_header {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.lights_title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.lights_moves-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 8px 20px;
+}
+
+.lights_moves-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lights_moves {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.lights_game {
+  position: relative;
+  width: 100%;
+}
+
+.lights_board {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.lights_cell {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 10px;
+  background: var(--empty);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.lights_cell.is-on {
+  background: var(--gold);
+  box-shadow: 0 0 12px rgba(232, 168, 32, 0.5);
+}
+
+.lights_cell:active {
+  transform: scale(0.92);
+}
+
+.lights_clear {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: rgba(10, 10, 20, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  backdrop-filter: blur(2px);
+}
+
+.lights_clear.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lights_clear-msg {
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 24px rgba(232, 168, 32, 0.7);
+}
+
+.lights_footer {
+  width: 100%;
+}
+
+.lights_reset-btn {
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.lights_reset-btn:active {
+  transform: scale(0.97);
+  background: #26263a;
+}
+</style>
