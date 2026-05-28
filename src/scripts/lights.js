@@ -25,7 +25,7 @@ function getNeighbors(index) {
 }
 
 function flipCells(targetBoard, index) {
-  getNeighbors(index).forEach(i => {
+  getNeighbors(index).forEach((i) => {
     targetBoard[i] = !targetBoard[i];
   });
 }
@@ -38,7 +38,7 @@ function generateBoard() {
     for (let i = 0; i < count; i++) {
       flipCells(b, Math.floor(Math.random() * SIZE * SIZE));
     }
-  } while (b.every(cell => cell));
+  } while (b.every((cell) => cell));
   return b;
 }
 
@@ -63,7 +63,7 @@ function handleCellClick(index) {
   moves++;
   updateMoves();
   renderBoard();
-  if (board.every(cell => cell)) {
+  if (board.every((cell) => cell)) {
     isCleared = true;
     $('.js-lights-clear').classList.add('is-visible');
   }

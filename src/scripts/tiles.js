@@ -36,7 +36,11 @@ function applyTileStyle(el, tile, r, c, cls = 'tile') {
   el.style.height = size + 'px';
   el.style.left = left + 'px';
   el.style.top = top + 'px';
-  const cfg = TILE_COLORS[tile.value] || { bg: '#e8c200', fg: '#0f0f14', fs: 18 };
+  const cfg = TILE_COLORS[tile.value] || {
+    bg: '#e8c200',
+    fg: '#0f0f14',
+    fs: 18,
+  };
   el.style.background = cfg.bg;
   el.style.color = cfg.fg;
   el.style.fontSize = cfg.fs + 'px';
@@ -67,7 +71,9 @@ function render(newPos = [], mergedIds = new Set()) {
 }
 
 function slideWithTracking(row) {
-  const items = row.map((t, i) => ({ id: t.id, value: t.value, origIdx: i })).filter((t) => t.id !== 0);
+  const items = row
+    .map((t, i) => ({ id: t.id, value: t.value, origIdx: i }))
+    .filter((t) => t.id !== 0);
   const resultItems = [];
   const moves = [];
   let scoreGain = 0;
@@ -122,7 +128,8 @@ function updateScore() {
 
 function addTile() {
   const empties = [];
-  for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (!board[r][c].id) empties.push([r, c]);
+  for (let r = 0; r < N; r++)
+    for (let c = 0; c < N; c++) if (!board[r][c].id) empties.push([r, c]);
   if (!empties.length) return null;
   const [r, c] = empties[Math.floor(Math.random() * empties.length)];
   board[r][c] = { id: nextTileId++, value: Math.random() < 0.9 ? 2 : 4 };
@@ -152,7 +159,12 @@ function move(dir) {
       positions = Array.from({ length: N }, (_, r) => [N - 1 - r, i]);
     }
 
-    const { arr, moves, scoreGain, mergedIds: rowMergedIds } = slideWithTracking(row);
+    const {
+      arr,
+      moves,
+      scoreGain,
+      mergedIds: rowMergedIds,
+    } = slideWithTracking(row);
     score += scoreGain;
     rowMergedIds.forEach((id) => mergedIds.add(id));
 
@@ -167,7 +179,9 @@ function move(dir) {
     });
   }
 
-  const moved = board.some((row, r) => row.some((t, c) => t.id !== old[r][c].id));
+  const moved = board.some((row, r) =>
+    row.some((t, c) => t.id !== old[r][c].id)
+  );
   if (!moved) {
     score = oldScore;
     return;
@@ -223,7 +237,9 @@ function hideOverlay() {
 }
 
 function newGame() {
-  board = Array.from({ length: N }, () => Array.from({ length: N }, () => ({ id: 0, value: 0 })));
+  board = Array.from({ length: N }, () =>
+    Array.from({ length: N }, () => ({ id: 0, value: 0 }))
+  );
   score = 0;
   prev = null;
   prevScore = 0;
@@ -261,7 +277,7 @@ game.addEventListener(
     ty = e.touches[0].clientY;
     e.preventDefault();
   },
-  { passive: false },
+  { passive: false }
 );
 game.addEventListener(
   'touchend',
@@ -274,12 +290,17 @@ game.addEventListener(
     else move(dy > 0 ? 'down' : 'up');
     e.preventDefault();
   },
-  { passive: false },
+  { passive: false }
 );
 
 // Keyboard
 document.addEventListener('keydown', (e) => {
-  const map = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
+  const map = {
+    ArrowLeft: 'left',
+    ArrowRight: 'right',
+    ArrowUp: 'up',
+    ArrowDown: 'down',
+  };
   if (map[e.key]) {
     e.preventDefault();
     move(map[e.key]);
