@@ -11,7 +11,8 @@
       "!!**/dist",
       "!!**/build",
       "!!**/out",
-      "!!**/production"
+      "!!**/production",
+      "!src/styles/reset.css"
     ],
     "ignoreUnknown": false
   },
@@ -23,7 +24,21 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "off",
+        "noUnusedImports": "off"
+      },
+      "suspicious": {
+        "noUnknownAtRules": {
+          "level": "error",
+          "options": {
+            "ignore": [
+              "custom-media"
+            ]
+          }
+        }
+      }
     }
   },
   "javascript": {
@@ -31,6 +46,11 @@
       "quoteStyle": "single",
       "jsxQuoteStyle": "single",
       "trailingCommas": "es5"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "assist": {
