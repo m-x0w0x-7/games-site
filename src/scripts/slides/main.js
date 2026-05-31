@@ -6,7 +6,11 @@ import {
   moveTile,
   isSolved,
 } from './puzzle.js';
-import { getRowFromIndex, getColFromIndex, getIndexFromRowCol } from './utils.js';
+import {
+  getRowFromIndex,
+  getColFromIndex,
+  getIndexFromRowCol,
+} from './utils.js';
 import {
   initRenderer,
   createTileElements,
@@ -26,10 +30,18 @@ const IMAGE_LIST = [
   '/assets/images/slides/img_03.jpg',
 ];
 
-let appEl, boardEl, msgEl, moveEl, startBtnEl, retryBtnEl, reselectBtnEl, customImageBtnEl, imageFileInputEl;
+let appEl,
+  boardEl,
+  msgEl,
+  moveEl,
+  startBtnEl,
+  retryBtnEl,
+  reselectBtnEl,
+  customImageBtnEl,
+  imageFileInputEl;
 
 function $(name) {
-  return document.querySelector('.js-' + name);
+  return·document.querySelector(`.js-${name}`);
 }
 
 // --- フェーズ管理 ---
@@ -124,9 +136,9 @@ function getFlickTargetIndex(dir) {
 
   const offset = {
     right: [0, -1],
-    left:  [0,  1],
-    down:  [-1, 0],
-    up:    [1,  0],
+    left: [0, 1],
+    down: [-1, 0],
+    up: [1, 0],
   }[dir];
 
   if (!offset) return -1;
@@ -134,7 +146,13 @@ function getFlickTargetIndex(dir) {
   const targetRow = emptyRow + offset[0];
   const targetCol = emptyCol + offset[1];
 
-  if (targetRow < 0 || targetRow >= gridSize || targetCol < 0 || targetCol >= gridSize) return -1;
+  if (
+    targetRow < 0 ||
+    targetRow >= gridSize ||
+    targetCol < 0 ||
+    targetCol >= gridSize
+  )
+    return -1;
   return getIndexFromRowCol(targetRow, targetCol, gridSize);
 }
 
@@ -160,27 +178,24 @@ function setupEventListeners() {
     imageFileInputEl.value = ''; // 同じファイルを再選択できるようリセット
     if (!file) return;
 
-    openCropper(
-      file,
-      (blobUrl) => {
-        // カスタム画像を使う場合はプリセットの選択を解除
-        document.querySelectorAll('.picker-btn').forEach((btn) => {
-          btn.classList.remove('picker-btn--selected');
-          btn.setAttribute('aria-pressed', 'false');
-        });
+    openCropper(file, (blobUrl) => {
+      // カスタム画像を使う場合はプリセットの選択を解除
+      document.querySelectorAll('.picker-btn').forEach((btn) => {
+        btn.classList.remove('picker-btn--selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
 
-        // 前のカスタム画像 URL を解放
-        if (state.imageSrc.startsWith('blob:')) {
-          URL.revokeObjectURL(state.imageSrc);
-        }
+      // 前のカスタム画像 URL を解放
+      if (state.imageSrc.startsWith('blob:')) {
+        URL.revokeObjectURL(state.imageSrc);
+      }
 
-        state.imageSrc = blobUrl;
-        setPhase(Phase.READY);
-        initializePuzzle(state);
-        createTileElements(state);
-        renderGameUI();
-      },
-    );
+      state.imageSrc = blobUrl;
+      setPhase(Phase.READY);
+      initializePuzzle(state);
+      createTileElements(state);
+      renderGameUI();
+    });
   });
 
   // スタートボタン
@@ -202,36 +217,51 @@ function setupEventListeners() {
   let touchStartX = 0;
   let touchStartY = 0;
 
-  boardEl.addEventListener('touchstart', (e) => {
-    if (state.phase !== Phase.PLAYING) return;
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
+  boardEl.addEventListener(
+    'touchstart',
+    (e) => {
+      if (state.phase !== Phase.PLAYING) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
 
-  boardEl.addEventListener('touchend', (e) => {
-    if (state.phase !== Phase.PLAYING) return;
-    const touch = e.changedTouches[0];
-    const dx = touch.clientX - touchStartX;
-    const dy = touch.clientY - touchStartY;
-    const dist = Math.max(Math.abs(dx), Math.abs(dy));
+  boardEl.addEventListener(
+    'touchend',
+    (e) => {
+      if (state.phase !== Phase.PLAYING) return;
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      const dist = Math.max(Math.abs(dx), Math.abs(dy));
 
-    const MIN_SWIPE = 20;
+      const MIN_SWIPE = 20;
 
-    if (dist < MIN_SWIPE) {
-      const tileEl = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.slide-tile');
-      if (!tileEl || tileEl.classList.contains('slide-tile--last')) return;
-      const index = parseInt(tileEl.dataset.index ?? '', 10);
-      if (!Number.isNaN(index)) handleMove(index);
-    } else {
-      const dir = Math.abs(dx) > Math.abs(dy)
-        ? (dx > 0 ? 'right' : 'left')
-        : (dy > 0 ? 'down' : 'up');
-      const targetIndex = getFlickTargetIndex(dir);
-      if (targetIndex >= 0) handleMove(targetIndex);
-    }
+      if (dist < MIN_SWIPE) {
+        const tileEl = document
+          .elementFromPoint(touch.clientX, touch.clientY)
+          ?.closest('.slide-tile');
+        if (!tileEl || tileEl.classList.contains('slide-tile--last')) return;
+        const index = parseInt(tileEl.dataset.index ?? '', 10);
+        if (!Number.isNaN(index)) handleMove(index);
+      } else {
+        const dir =
+          Math.abs(dx) > Math.abs(dy)
+            ? dx > 0
+              ? 'right'
+              : 'left'
+            : dy > 0
+              ? 'down'
+              : 'up';
+        const targetIndex = getFlickTargetIndex(dir);
+        if (targetIndex >= 0) handleMove(targetIndex);
+      }
 
-    e.preventDefault();
-  }, { passive: false });
+      e.preventDefault();
+    },
+    { passive: false }
+  );
 }
 
 // --- 初期化 ---

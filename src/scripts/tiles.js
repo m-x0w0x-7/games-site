@@ -6,7 +6,7 @@ let nextTileId = 1;
 const tileElements = new Map(); // id → HTMLElement
 
 function $(id) {
-  return document.querySelector('.js-' + id);
+  return document.querySelector(`.js-${id}`);
 }
 
 function buildGrid() {
@@ -32,14 +32,18 @@ function tilePos(r, c) {
 function applyTileStyle(el, tile, r, c, cls = 'tile') {
   const { left, top, size } = tilePos(r, c);
   el.className = cls;
-  el.style.width = size + 'px';
-  el.style.height = size + 'px';
-  el.style.left = left + 'px';
-  el.style.top = top + 'px';
-  const cfg = TILE_COLORS[tile.value] || { bg: '#e8c200', fg: '#0f0f14', fs: 18 };
+  el.style.width = `${size}px`;
+  el.style.height = `${size}px`;
+  el.style.left = `${left}px`;
+  el.style.top = `${top}px`;
+  const cfg = TILE_COLORS[tile.value] || {
+    bg: '#e8c200',
+    fg: '#0f0f14',
+    fs: 18,
+  };
   el.style.background = cfg.bg;
   el.style.color = cfg.fg;
-  el.style.fontSize = cfg.fs + 'px';
+  el.style.fontSize = `${cfg.fs}px`;
   el.textContent = tile.value;
 }
 
@@ -67,7 +71,9 @@ function render(newPos = [], mergedIds = new Set()) {
 }
 
 function slideWithTracking(row) {
-  const items = row.map((t, i) => ({ id: t.id, value: t.value, origIdx: i })).filter((t) => t.id !== 0);
+  const items = row
+    .map((t, i) => ({ id: t.id, value: t.value, origIdx: i }))
+    .filter((t) => t.id !== 0);
   const resultItems = [];
   const moves = [];
   let scoreGain = 0;
@@ -101,8 +107,8 @@ function animateMove(allMoves) {
     const el = tileElements.get(id);
     if (!el) continue;
     const { left, top } = tilePos(toR, toC);
-    el.style.left = left + 'px';
-    el.style.top = top + 'px';
+    el.style.left = `${left}px`;
+    el.style.top = `${top}px`;
   }
 }
 
@@ -122,7 +128,8 @@ function updateScore() {
 
 function addTile() {
   const empties = [];
-  for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (!board[r][c].id) empties.push([r, c]);
+  for (let r = 0; r < N; r++)
+    for (let c = 0; c < N; c++) if (!board[r][c].id) empties.push([r, c]);
   if (!empties.length) return null;
   const [r, c] = empties[Math.floor(Math.random() * empties.length)];
   board[r][c] = { id: nextTileId++, value: Math.random() < 0.9 ? 2 : 4 };
@@ -152,9 +159,16 @@ function move(dir) {
       positions = Array.from({ length: N }, (_, r) => [N - 1 - r, i]);
     }
 
-    const { arr, moves, scoreGain, mergedIds: rowMergedIds } = slideWithTracking(row);
+    const {
+      arr,
+      moves,
+      scoreGain,
+      mergedIds: rowMergedIds,
+    } = slideWithTracking(row);
     score += scoreGain;
-    rowMergedIds.forEach((id) => mergedIds.add(id));
+    rowMergedIds.forEach((id) => {
+      mergedIds.add(id);
+    });
 
     moves.forEach((m) => {
       const [toR, toC] = positions[m.to];
@@ -167,7 +181,9 @@ function move(dir) {
     });
   }
 
-  const moved = board.some((row, r) => row.some((t, c) => t.id !== old[r][c].id));
+  const moved = board.some((row, r) =>
+    row.some((t, c) => t.id !== old[r][c].id)
+  );
   if (!moved) {
     score = oldScore;
     return;
@@ -211,7 +227,7 @@ function canMove() {
 
 function showOverlay(title, btnLabel, action) {
   $('ov-title').textContent = title;
-  $('ov-sub').textContent = 'Score: ' + score;
+  $('ov-sub').textContent = `Score: ${score}`;
   const btn = $('ov-btn');
   btn.textContent = btnLabel;
   btn.onclick = action;
@@ -223,7 +239,9 @@ function hideOverlay() {
 }
 
 function newGame() {
-  board = Array.from({ length: N }, () => Array.from({ length: N }, () => ({ id: 0, value: 0 })));
+  board = Array.from({ length: N }, () =>
+    Array.from({ length: N }, () => ({ id: 0, value: 0 }))
+  );
   score = 0;
   prev = null;
   prevScore = 0;
@@ -261,7 +279,7 @@ game.addEventListener(
     ty = e.touches[0].clientY;
     e.preventDefault();
   },
-  { passive: false },
+  { passive: false }
 );
 game.addEventListener(
   'touchend',
@@ -274,12 +292,17 @@ game.addEventListener(
     else move(dy > 0 ? 'down' : 'up');
     e.preventDefault();
   },
-  { passive: false },
+  { passive: false }
 );
 
 // Keyboard
 document.addEventListener('keydown', (e) => {
-  const map = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
+  const map = {
+    ArrowLeft: 'left',
+    ArrowRight: 'right',
+    ArrowUp: 'up',
+    ArrowDown: 'down',
+  };
   if (map[e.key]) {
     e.preventDefault();
     move(map[e.key]);
@@ -287,7 +310,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Init
-best = parseInt(localStorage.getItem('2048b') || '0');
+best = parseInt(localStorage.getItem('2048b') || '0', 10);
 $('best').textContent = best;
 buildGrid();
 newGame();
@@ -297,7 +320,7 @@ window.addEventListener('resize', () => render());
 const canvas = document.querySelector('.js-bg');
 const ctx = canvas.getContext('2d');
 
-let particles = [];
+const particles = [];
 const particleCount = 30;
 
 function resize() {

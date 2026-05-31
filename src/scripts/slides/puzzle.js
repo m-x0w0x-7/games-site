@@ -27,7 +27,10 @@ export function canMoveTile(tileIndex, state) {
 
 export function moveTile(tileIndex, state) {
   const copy = [...state.tiles];
-  [copy[tileIndex], copy[state.emptyIndex]] = [copy[state.emptyIndex], copy[tileIndex]];
+  [copy[tileIndex], copy[state.emptyIndex]] = [
+    copy[state.emptyIndex],
+    copy[tileIndex],
+  ];
   state.tiles = copy;
   state.emptyIndex = tileIndex;
   state.moveCount++;
@@ -41,7 +44,10 @@ export function swapTiles(indexA, indexB, state) {
 
 export function getMovableIndices(state) {
   return state.tiles.reduce((acc, _, i) => {
-    if (i !== state.emptyIndex && isAdjacent(i, state.emptyIndex, state.gridSize)) {
+    if (
+      i !== state.emptyIndex &&
+      isAdjacent(i, state.emptyIndex, state.gridSize)
+    ) {
       acc.push(i);
     }
     return acc;
@@ -52,7 +58,10 @@ export function performRandomMove(state) {
   const movable = getMovableIndices(state);
   const randIdx = movable[Math.floor(Math.random() * movable.length)];
   const copy = [...state.tiles];
-  [copy[randIdx], copy[state.emptyIndex]] = [copy[state.emptyIndex], copy[randIdx]];
+  [copy[randIdx], copy[state.emptyIndex]] = [
+    copy[state.emptyIndex],
+    copy[randIdx],
+  ];
   state.tiles = copy;
   state.emptyIndex = randIdx;
 }

@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "games-site",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -10,7 +10,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node --test"
+    "test": "node --test",
+    "format": "biome format ./src",
+    "format:fix": "biome format --write ./src",
+    "lint": "biome lint ./src",
+    "lint:fix": "biome lint --write ./src",
+    "check": "biome check",
+    "check:fix": "biome check --write ./src"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
@@ -20,6 +26,7 @@
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.15",
     "@csstools/postcss-global-data": "^4.0.0",
     "eslint": "^10.2.0",
     "eslint-plugin-astro": "^1.7.0",
