@@ -20,9 +20,6 @@
   --muted-rgb: 75 137 163;
 }
 
-html {
-}
-
 body {
   width: 100%;
   min-height: 100vh;
@@ -52,12 +49,12 @@ a {
 }
 
 .u-pc {
-  @media (--sp) {
-    display: none !important;
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 .u-sp {
-  @media (--pc) {
-    display: none !important;
+  @media (min-width: 769px) {
+    display: none;
   }
 }

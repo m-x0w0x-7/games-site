@@ -6,7 +6,7 @@ let nextTileId = 1;
 const tileElements = new Map(); // id → HTMLElement
 
 function $(id) {
-  return document.querySelector('.js-' + id);
+  return document.querySelector(`.js-${id}`);
 }
 
 function buildGrid() {
@@ -32,10 +32,10 @@ function tilePos(r, c) {
 function applyTileStyle(el, tile, r, c, cls = 'tile') {
   const { left, top, size } = tilePos(r, c);
   el.className = cls;
-  el.style.width = size + 'px';
-  el.style.height = size + 'px';
-  el.style.left = left + 'px';
-  el.style.top = top + 'px';
+  el.style.width = `${size}px`;
+  el.style.height = `${size}px`;
+  el.style.left = `${left}px`;
+  el.style.top = `${top}px`;
   const cfg = TILE_COLORS[tile.value] || {
     bg: '#e8c200',
     fg: '#0f0f14',
@@ -43,7 +43,7 @@ function applyTileStyle(el, tile, r, c, cls = 'tile') {
   };
   el.style.background = cfg.bg;
   el.style.color = cfg.fg;
-  el.style.fontSize = cfg.fs + 'px';
+  el.style.fontSize = `${cfg.fs}px`;
   el.textContent = tile.value;
 }
 
@@ -107,8 +107,8 @@ function animateMove(allMoves) {
     const el = tileElements.get(id);
     if (!el) continue;
     const { left, top } = tilePos(toR, toC);
-    el.style.left = left + 'px';
-    el.style.top = top + 'px';
+    el.style.left = `${left}px`;
+    el.style.top = `${top}px`;
   }
 }
 
@@ -166,7 +166,9 @@ function move(dir) {
       mergedIds: rowMergedIds,
     } = slideWithTracking(row);
     score += scoreGain;
-    rowMergedIds.forEach((id) => mergedIds.add(id));
+    rowMergedIds.forEach((id) => {
+      mergedIds.add(id);
+    });
 
     moves.forEach((m) => {
       const [toR, toC] = positions[m.to];
@@ -225,7 +227,7 @@ function canMove() {
 
 function showOverlay(title, btnLabel, action) {
   $('ov-title').textContent = title;
-  $('ov-sub').textContent = 'Score: ' + score;
+  $('ov-sub').textContent = `Score: ${score}`;
   const btn = $('ov-btn');
   btn.textContent = btnLabel;
   btn.onclick = action;
@@ -308,7 +310,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Init
-best = parseInt(localStorage.getItem('2048b') || '0');
+best = parseInt(localStorage.getItem('2048b') || '0', 10);
 $('best').textContent = best;
 buildGrid();
 newGame();
@@ -318,7 +320,7 @@ window.addEventListener('resize', () => render());
 const canvas = document.querySelector('.js-bg');
 const ctx = canvas.getContext('2d');
 
-let particles = [];
+const particles = [];
 const particleCount = 30;
 
 function resize() {

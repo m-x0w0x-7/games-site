@@ -41,7 +41,7 @@ let appEl,
   imageFileInputEl;
 
 function $(name) {
-  return document.querySelector('.js-' + name);
+  return·document.querySelector(`.js-${name}`);
 }
 
 // --- フェーズ管理 ---

@@ -69,8 +69,8 @@ function _setPosition(el, index, state) {
   if (!tileSize) return;
   const row = getRowFromIndex(index, state.gridSize);
   const col = getColFromIndex(index, state.gridSize);
-  el.style.width = tileSize + 'px';
-  el.style.height = tileSize + 'px';
+  el.style.width = `${tileSize}px`;
+  el.style.height = `${tileSize}px`;
   el.style.transform = `translate(${col * tileSize}px, ${row * tileSize}px)`;
 }
 

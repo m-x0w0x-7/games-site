@@ -47,7 +47,7 @@ function renderBoard() {
   boardEl.innerHTML = '';
   board.forEach((isLit, index) => {
     const btn = document.createElement('button');
-    btn.className = 'lights_cell' + (isLit ? ' is-on' : '');
+    btn.className = `lights_cell${isLit ? ' is-on' : ''}`;
     btn.addEventListener('click', () => handleCellClick(index));
     boardEl.appendChild(btn);
   });
