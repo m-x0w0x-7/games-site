@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import relativeLinks from 'astro-relative-links';
+import relativeLinks from './src/integrations/relative-links.js';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
