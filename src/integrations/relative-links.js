@@ -14,18 +14,25 @@ function toRelative(outDir, filePath) {
   );
 }
 
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export function replaceHTML(html, base, relativePath) {
   const htmlPattern = `<[^>]+\\s(${htmlAttr}|${styleAttr}${styleUrl})`;
   const cssPattern = `<style>[^<]*${styleUrl}`;
   const regex = new RegExp(
-    `(?<=(${htmlPattern}|${cssPattern})\\s*?)${base}(?!/)`,
+    `(?<=(${htmlPattern}|${cssPattern})\\s*?)${escapeRegExp(base)}(?!/)`,
     'gm'
   );
   return html.replace(regex, `${relativePath}/`);
 }
 
 export function replaceCSS(css, base, relativePath) {
-  const regex = new RegExp(`(?<=${styleUrl}\\s*?)${base}(?!/)`, 'gm');
+  const regex = new RegExp(
+    `(?<=${styleUrl}\\s*?)${escapeRegExp(base)}(?!/)`,
+    'gm'
+  );
   return css.replace(regex, `${relativePath}/`);
 }
 
@@ -39,12 +46,16 @@ export default function relativeLinks() {
       },
       'astro:build:done': ({ dir }) => {
         const outDir = fileURLToPath(dir);
-        const files = readdirSync(outDir, { recursive: true });
-        for (const file of files) {
-          const filePath = path.join(outDir, file);
-          const replace = file.endsWith('.html')
+        const entries = readdirSync(outDir, {
+          recursive: true,
+          withFileTypes: true,
+        });
+        for (const entry of entries) {
+          if (!entry.isFile()) continue;
+          const filePath = path.join(entry.parentPath, entry.name);
+          const replace = entry.name.endsWith('.html')
             ? replaceHTML
-            : file.endsWith('.css')
+            : entry.name.endsWith('.css')
               ? replaceCSS
               : null;
           if (!replace) continue;
