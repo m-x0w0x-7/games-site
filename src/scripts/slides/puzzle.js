@@ -1,4 +1,4 @@
-import { getRowFromIndex, getColFromIndex } from './utils.js';
+import { getColFromIndex, getRowFromIndex } from './utils.js';
 
 export function createSolvedTiles(gridSize) {
   const total = gridSize * gridSize;

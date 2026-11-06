@@ -1,4 +1,4 @@
-import { getRowFromIndex, getColFromIndex } from './utils.js';
+import { getColFromIndex, getRowFromIndex } from './utils.js';
 
 // tileElements[pieceValue] = DOM要素（pieceValueは正しい位置のインデックス）
 let boardEl;

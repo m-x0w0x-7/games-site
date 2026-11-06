@@ -1,25 +1,25 @@
-import { Phase, createInitialState } from './state.js';
+import { openCropper } from './cropper.js';
 import {
-  initializePuzzle,
-  shuffleTiles,
   canMoveTile,
-  moveTile,
+  initializePuzzle,
   isSolved,
+  moveTile,
+  shuffleTiles,
 } from './puzzle.js';
 import {
-  getRowFromIndex,
-  getColFromIndex,
-  getIndexFromRowCol,
-} from './utils.js';
-import {
-  initRenderer,
   createTileElements,
+  initRenderer,
   renderBoard,
   renderClear,
   renderMessage,
   renderMoveCount,
 } from './render.js';
-import { openCropper } from './cropper.js';
+import { createInitialState, Phase } from './state.js';
+import {
+  getColFromIndex,
+  getIndexFromRowCol,
+  getRowFromIndex,
+} from './utils.js';
 
 const state = createInitialState();
 

@@ -33,9 +33,7 @@
         "noUnknownAtRules": {
           "level": "error",
           "options": {
-            "ignore": [
-              "custom-media"
-            ]
+            "ignore": ["custom-media"]
           }
         }
       }
